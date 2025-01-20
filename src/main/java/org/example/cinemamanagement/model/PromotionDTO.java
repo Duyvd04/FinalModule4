@@ -10,23 +10,23 @@ public class PromotionDTO implements Validator {
 
     private Long id;
 
-    @NotNull(message = "Tiêu đề bắt buộc")
-    @Size(min = 1, max = 100, message = "Title must be between 1 and 100 characters.")
+    @NotNull(message = "Tiêu đề bắt buộc.")
+    @Size(min = 1, max = 100, message = "Tiêu đề từ 1 đến 100 kí tự.")
     private String title;
 
-    @NotNull(message = "Start date is required.")
-    @FutureOrPresent(message = "Start date must be in the future or today.")
+    @NotNull(message = "Thời gian bắt đầu bắt buộc.")
+    @FutureOrPresent(message = "Thời gian bắt đầu phải là ngày/tháng/năm và phải lớn hơn thời gian hiện tại.")
     private LocalDate startDate;
 
-    @NotNull(message = "End date is required.")
+    @NotNull(message = "Thời gian kết thúc bắt buộc.")
     private LocalDate endDate;
 
-    @NotNull(message = "Discount is required.")
-    @DecimalMin(value = "10000", message = "Discount must be greater than 10,000 VND.")
+    @NotNull(message = "Mức giảm giá bắt buộc")
+    @DecimalMin(value = "10000", message = "Mức giảm giá phải lớn hơn 10.000 VNĐ ")
     private double discount;
 
-    @NotNull(message = "Details are required.")
-    @Size(min = 1, message = "Details cannot be empty.")
+    @NotNull(message = "Chi tiết bắt buộc")
+    @Size(min = 1, message = "Chi tiết không được để trống.")
     private String details;
 
     public Long getId() {
@@ -88,7 +88,7 @@ public class PromotionDTO implements Validator {
         PromotionDTO promotionDTO = (PromotionDTO) target;
         if (promotionDTO.getEndDate() != null && promotionDTO.getStartDate() != null) {
             if (promotionDTO.getEndDate().isBefore(promotionDTO.getStartDate().plusDays(1))) {
-                errors.rejectValue("endDate", "EndDateInvalid", "End date must be at least 1 day after start date.");
+                errors.rejectValue("endDate", "EndDateInvalid", "Thời gian kết thúc phải là ngày/tháng/năm và lớn hơn thời gian bắt đầu ít nhất 1 ngày.");
             }
         }
     }
